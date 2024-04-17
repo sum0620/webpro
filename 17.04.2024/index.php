@@ -3,19 +3,25 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Ana Sayfa</title>
+	<title></title>
 </head>
 <body>
-	 <?php
- require_once("ekle_sil.php");
- require_once("listele.php");
- klasor_ekle("Kayitlar"); 
-klasor_ekle("Kayitlar/Sümeyrah");
- klasor_ekle("Kayitlar/Selman");
- klasor_listele("Kayitlar");
-  klasor_sil("Kayitlar/Sümeyrah");
- klasor_sil("Kayitlar/Selman");
- ?>
+	<?php
+    @mkdir("Dosyaislemleri");
+    @mkdir("Dosyaislemleri/aktif");
+    @mkdir("Dosyaislemleri/mezun");
+    unlink("Dosyaislemleri/aktif/03numaraliOgrenci.txt");
+ unlink("Dosyaislemleri/aktif/06numaraliOgrenci.txt");
+ unlink("Dosyaislemleri/aktif/16numaraliOgrenci.txt");
+
+ echo "3 Öğrencinin dosya bilgileri silindi.";
+
+ @touch("Dosyaislemleri/mezun/03numaraliOgrenci.txt");
+ @touch("Dosyaislemleri/mezun/06numaraliOgrenci.txt");
+ @touch("Dosyaislemleri/mezun/16numaraliOgrenci.txt");
+ echo "3 Öğrenci için yeni dosyalar oluşturuldu.";
+
+	?>
 
 </body>
 </html>

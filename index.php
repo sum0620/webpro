@@ -1,103 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
-	
- <style type="text/css">
- 	.arka{
- 		margin:auto;
-            margin-top:20px;
-            height:auto;
-            width:500px;
-            color:indigo;
-            border:2px solid black;
-            padding:25px;
-            background:azure;
- 	}
- </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Öğrenci Kayıt Formu</title>
+  <style type="text/css">form {
+  max-width: 300px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"], input[type="date"], select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+}
+
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #3e8e4</style>
+  
 </head>
 <body>
+  <form method="get">
+    <label for="ogr_ad">Ad:</label>
+    <input type="text" id="ogr_ad" name="ogr_ad"><br><br>
+    <label for="ogr_soyad">Soyad:</label>
+    <input type="text" id="ogr_soyad" name="ogr_soyad"><br><br>
+    <label for="ogr_no">Öğrenci No:</label>
+    <input type="text" id="ogr_no" name="ogr_no"><br><br>
+    <label for="ogr_sinif">Sınıf:</label>
+    <input type="text" id="ogr_sinif" name="ogr_sinif"><br><br>
+    <label for="ogr_cinsiyet">Cinsiyet:</label>
+    <select id="ogr_cinsiyet" name="ogr_cinsiyet">
+      <option value="ERKEK">Erkek</option>
+      <option value="KIZ">Kız</option>
+    </select><br><br>
+    <label for="ogr_alan">Alan:</label>
+    <input type="text" id="ogr_alan" name="ogr_alan"><br><br>
+    <label for="ogr_dtarih">Doğum Tarihi:</label>
+    <input type="date" id="ogr_dtarih" name="ogr_dtarih"><br><br>
+    <input type="submit" value="Kaydet">
+  </form>
 
-	<div class="arka">
+<?php
+ $baglanti = mysqli_connect("localhost", "root", "", "okul");
+ 
+if($baglanti === false){
+    die("Bağlantı Hatası:" . mysqli_connect_error());
+ }
+ 
 
-		<form action="kontrol.php" name="basvuru" method="post" enctype="multipart/form-data">
-         <h2>Yazılım Uzmanı Bilgi Formu</h2>
-            <h3>Kişisel Bilgiler</h3>
-            <table cellpadding="5px">
-               <tr>
-                  <td>T.C. Kimlik</td>
-                  <td><input type="text" name="tc" class="form-control">
-                  </td>
-               </tr>
-               <tr>
-                  <td>Ad Soyad</td>
-                  <td><input type="text" name="adSoyad" class="form
-control"></td>
-               </tr>
-                <tr>
-                   <td>Yaş</td>
-                   <td><input type="number" name="yas" min="20" max="40" 
-class="form-control" ></td>
-                </tr>
-                <tr>
-                   <td>Mail Adresi</td>
-                   <td><input type="email" name="ePosta" class="form
-control" ></td>
-                </tr>
-                 <tr>
-                   <td>Fotoğraf Ekle</td>
-                   <td>  <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*">
-  <input type="submit" value="Upload Image" name="submit">
-                   </td>
-                </tr>
-                </table>
-                <h3>Mesleki Deneyim</h3>
-             <table cellpadding="5px">
-                <tr>
-                   <td>Yazılıma Giriş Tarihi</td>
-                   <td>
-                      <input type="date" name="tarih" value="2024-02-28" 
-class="form-control">
-                   </td>
-                </tr>
-                <tr>
-                   <td>Yazılım Deneyimi</td>
-                   <td>
-                      <label><input type="radio" name="deneyim"> 1 - 5 yıl
-      </label><br>
-                      <label><input type="radio" name="deneyim"> 6 - 10 yıl
-      </label><br>
-                   </td>
-                </tr>
-                <tr>
-                   <td>Programlama Dilleri</td>
-                   <td>
-                      <select name="pDil"  multiple size="3" class="form-control">
-                         <option>C#</option>
-                         <option>PHP</option>
-                         <option>Java</option>
-                         <option>Python</option>
-                         <option>JavaScript</option>
-                         <option>C++</option>
-                         <option>C</option>
-                         <option>Pascal</option>
-                      </select>
-                   </td>
-                </tr>
-             </table>
-            <h3>Form Onay</h3>
-               <label><input type="checkbox" name="onay"> Yukarıdaki bilgilerin 
-doğruluğunu kabul ediyorum ve sözleşmeyi onaylıyorum.
- </label><br>
- <input type="submit" value="Kaydet"  class="btn btn-primary btn-block">
- <input type="reset" value="Temizle"  class="btn btn-danger btn-block">
- </form>
+ 
+ $sorgu = "INSERT INTO ogrenci (id, ogr_ad, ogr_soyad, ogr_no, ogr_sinif, ogr_cinsiyet, ogr_alan, ogr_dtarih) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";
 
-
-	</div>
-	
+ if($stmt = mysqli_prepare($baglanti, $sorgu))
+  {
+    $ogr_ad = $_GET['ogr_ad'];
+    $ogr_soyad =$_GET['ogr_soyad'];
+    $ogr_no = $_GET['ogr_no'];
+    $ogr_sinif=$_GET['ogr_sinif'];
+    $ogr_cinsiyet=$_GET['ogr_cinsiyet'];
+    $ogr_alan=$_GET['ogr_alan'];
+    $ogr_dtarih=$_GET['ogr_dtarih'];
+    mysqli_stmt_bind_param($stmt,"sssssss",$ogr_ad, $ogr_soyad, $ogr_no,$ogr_sinif,$ogr_cinsiyet,$ogr_alan,$ogr_dtarih);
+    mysqli_stmt_execute($stmt);
+      echo "Kayıtlar başarıyla eklendi";
+ }
+ else{
+    echo "Hata:" . mysqli_error($baglanti);
+ }
+ 
+mysqli_stmt_close($stmt);
+ mysqli_close($baglanti);
+ ?>
 
 </body>
 </html>

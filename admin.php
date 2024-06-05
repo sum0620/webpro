@@ -2,6 +2,12 @@
 // Start session
 session_start();
 
+// Check if user is logged in
+if (!isset($_SESSION['username']) ||!isset($_SESSION['password'])) {
+  header("Location: login.php");
+  exit;
+}
+
 // Veritabanına bağlan
 $conn = mysqli_connect("localhost", "root", "", "okul");
 
@@ -11,15 +17,16 @@ if (!$conn) {
 }
 
 // Haberleri seç
-$query = "SELECT * FROM `haberler`";
+$query ="SELECT * FROM `haberler`";
 $result = mysqli_query($conn, $query);
 ?>
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
 <!-- Menü -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="index.php">Haber Portalı</a>
+  <a class="navbar-brand" href="admin.php">Admin Paneli</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -29,21 +36,10 @@ $result = mysqli_query($conn, $query);
         <a class="nav-link" href="index.php">Anasayfa</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="login.php">
-          <?php // Check if user is logged in
-            if (!isset($_SESSION['username']) ||!isset($_SESSION['password'])) {
-              echo "Oturum Aç";            
-            } else {echo "Admin Paneli";}
-          ?>
-        </a>
+        <a class="nav-link" href="admin.php">Admin Paneli</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="cikis.php">
-        <?php // Check if user is logged in
-            if (isset($_SESSION['username']) ||isset($_SESSION['password'])) {
-              echo "Oturumu Kapat";            
-            } 
-          ?></a>
+        <a class="nav-link" href="cikis.php">Oturumu Kapat</a>
       </li>
     </ul>
   </div>
@@ -59,6 +55,8 @@ $result = mysqli_query($conn, $query);
       <th>Yazar</th>
       <th>İçerik</th>
       <th>Tarih</th>
+      <th>Güncelle</th>
+      <th>Sil</th>
     </tr>
     <?php
     while($row = mysqli_fetch_array($result)) {
@@ -68,10 +66,16 @@ $result = mysqli_query($conn, $query);
       echo "<td>". $row['yazar']. "</td>";
       echo "<td>". $row['icerik']. "</td>";
       echo "<td>". $row['tarih']. "</td>";
+      echo "<td><a href='guncelle.php?id=". $row['id']. "' class='btn btn-primary'>Güncelle</a></td>";
+      echo "<td><a href='sil.php?id=". $row['id']. "' class='btn btn-danger'>Sil</a></td>";
       echo "</tr>";
     }
    ?>
-
+    <tr>
+      <td colspan="7">
+        <a href="ekle.php" class="btn btn-success">Ekle</a>
+      </td>
+    </tr>
   </table>
 </div>
 
